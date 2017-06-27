@@ -42,13 +42,13 @@ az resource list -g ${RGNAME} \
 az resource list -g ${RGNAME} \
     --query "[?type=='Microsoft.Compute/disks'].name" -o tsv \
     | tee >(cat >&2) \
-    | xargs -I TARGET az disk delete -n TARGET
+    | xargs -I TARGET az disk delete -y -n TARGET
 az network public-ip delete -n webapp-pip
 rm -f ./websv0-public-ip
 az resource list -g ${RGNAME} \
     --query "[?type=='Microsoft.Network/virtualNetworks'].name" -o tsv \
     | tee >(cat >&2) \
-    | xargs -I TARGET az network vnet delete -y -n TARGET
+    | xargs -I TARGET az network vnet delete -n TARGET
 az resource list -g ${RGNAME}     --query "[?type=='Microsoft.Network/networkSecurityGroups'].name" -o tsv \
     | tee >(cat >&2) \
     | xargs -I TARGET az network nsg delete -n TARGET
